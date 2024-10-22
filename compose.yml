@@ -1,0 +1,27 @@
+version: "3.8"
+services: 
+  front-end:
+    container_name: front-end-container
+    build: .
+    image: front-end-image
+    hostname: front-end
+    working_dir: /usr/src/front-end
+    entrypoint: ./entrypoint.sh
+    volumes: 
+      - type: bind
+        source: ./root/.p10k.zsh
+        target: /root/.p10k.zsh
+      - type: bind
+        source: ./root/.zshrc
+        target: /root/.zshrc
+      - ./:/usr/src/front-end/
+    ports:
+      - '4200:4200'
+    networks:
+      - front-end-network
+
+networks:
+  front-end-network:
+    driver: bridge
+    name: front-end-network
+
